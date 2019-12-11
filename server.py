@@ -29,7 +29,10 @@ class HomeHandler(tornado.web.RequestHandler):
 
 class EchoHandler(tornado.web.RequestHandler):
     async def get(self, cmd):
-        self.write(cmd)
+        code = int(self.get_argument("status", "200", True))
+        if code == 200:
+            self.write(cmd)
+        self.set_status(code)
 
 async def main():
     tornado.options.parse_command_line()
